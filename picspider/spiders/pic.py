@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import re
-import urllib.request
+# import urllib.request
 
 from picspider.items import PicspiderItem
 
@@ -17,11 +17,16 @@ class PicSpider(scrapy.Spider):
         picurl_pattern = 'http://img.mmjpg.com/small/.*?.jpg'
         picid_pattern = 'http://img.mmjpg.com/small/(.*?).jpg'
 
-        headers = {"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0",
-                   "Referer": "http://www.mmjpg.com/"}
-        opener = urllib.request.build_opener()
-        opener.addheaders = [headers]
-        urllib.request.install_opener(opener)
+        # import random
+        # random_index = random.randint(0, len(user_agent_list) - 1)
+        # random_agent = user_agent_list[random_index]
+        #
+        # headers = {"Referer": "http://www.mmjpg.com/",
+        #            "User-Agent": random_agent
+        #            }
+        # opener = urllib.request.build_opener()
+        # opener.addheaders = [headers]
+        # urllib.request.install_opener(opener)
 
         picurl_list = re.findall(picurl_pattern, str(response.body))
         picid_list = re.findall(picid_pattern, str(response.body))

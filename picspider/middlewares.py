@@ -6,6 +6,7 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from fake_useragent import UserAgent
 
 
 class PicspiderSpiderMiddleware(object):
@@ -101,3 +102,30 @@ class PicspiderDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+class RandomUserAgentMiddlware(object):
+    """
+    随机更换user-agent
+    """
+
+    def __init__(self, crawler):
+        super(RandomUserAgentMiddlware, self).__init__()
+        self.ua = UserAgent()
+        self.ua_type = crawler.settings.get("RANDOM_UA_TYPE", "random")
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        """
+        把crawler返回给当前类，这个crawler中包含有一切配置和参数(如settings等)
+        :param crawler:
+        :return:
+        """
+        return cls(crawler)
+
+    def process_request(self, request, spider):
+        def get_ua():
+            # getattr() 函数用于返回一个对象属性值5356
+            return getattr(self.ua, self.ua_type)
+
+        request.headers.setdefault("User-Agent", get_ua())
