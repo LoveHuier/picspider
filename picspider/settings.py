@@ -53,6 +53,7 @@ COOKIES_ENABLED = False
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     'picspider.middlewares.RandomUserAgentMiddlware': 543,
+    'picspider.middlewares.RandomProxyMiddlware': 542,
     'picspider.middlewares.PicspiderDownloaderMiddleware': None,
 }
 

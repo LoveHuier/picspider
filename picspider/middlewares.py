@@ -7,6 +7,7 @@
 
 from scrapy import signals
 from fake_useragent import UserAgent
+from tools.crawl_xici_ip import GetIP
 
 
 class PicspiderSpiderMiddleware(object):
@@ -129,3 +130,14 @@ class RandomUserAgentMiddlware(object):
             return getattr(self.ua, self.ua_type)
 
         request.headers.setdefault("User-Agent", get_ua())
+        # request.meta['proxy']="http://122.114.31.177:808"
+
+
+class RandomProxyMiddlware(object):
+    """
+    设置动态ip代理
+    """
+    def process_request(self, request, spider):
+        getdata = GetIP()
+        ip, port = getdata.get_random_ip()
+        request.meta['proxy'] = "http://{ip}:{port}".format(ip=ip, port=port)

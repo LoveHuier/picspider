@@ -11,6 +11,8 @@ class PicSpider(scrapy.Spider):
     allowed_domains = ['mmjpg.com']
     start_urls = ('http://www.mmjpg.com/',)
 
+    custom_settings = {"COOKIES_ENABLED": True}
+
     def parse(self, response):
         item = PicspiderItem()
 
